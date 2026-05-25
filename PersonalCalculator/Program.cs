@@ -4,8 +4,9 @@
 // Purpose:
 // Defines the application entry point for the Personal Calculator console
 // application. This file is responsible for starting the program, displaying the
-// initial user-facing messages, collecting the first numeric values from the
-// user, and keeping the console session active until the user presses Enter.
+// initial user-facing messages, collecting numeric input, presenting the
+// operation menu, and keeping the console session active until the user presses
+// Enter.
 //
 // Responsibility Boundary:
 // Program.cs should remain a small startup file. It should coordinate application
@@ -14,8 +15,9 @@
 //
 // Current Stage:
 // This version collects two numeric values from the user, validates that each
-// value can be interpreted as a number, stores the values as double variables,
-// and displays the collected values back to the user.
+// value can be interpreted as a number, displays a menu of available arithmetic
+// operations, validates the selected menu option, and displays which operation
+// was selected.
 //
 // Portfolio Quality Note:
 // Keeping the entry point readable while using reliable input validation makes
@@ -44,8 +46,37 @@ namespace PersonalCalculator
 
             Console.WriteLine();
             Console.WriteLine($"You entered: {firstNumber} and {secondNumber}");
+
+            int operationChoice = ReadOperationChoiceFromUser();
+
             Console.WriteLine();
 
+            if (operationChoice == 1)
+            {
+                Console.WriteLine("You chose Addition.");
+            }
+            else if (operationChoice == 2)
+            {
+                Console.WriteLine("You chose Subtraction.");
+            }
+            else if (operationChoice == 3)
+            {
+                Console.WriteLine("You chose Multiplication.");
+            }
+            else if (operationChoice == 4)
+            {
+                Console.WriteLine("You chose Division.");
+            }
+            else if (operationChoice == 5)
+            {
+                Console.WriteLine("You chose Modulus.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid operation choice.");
+            }
+
+            Console.WriteLine();
             Console.WriteLine("Thank you for using the calculator!");
             Console.WriteLine("Press Enter to close the application.");
 
@@ -74,6 +105,34 @@ namespace PersonalCalculator
                 }
 
                 Console.WriteLine("Invalid number. Please enter a valid numeric value.");
+                Console.WriteLine();
+            }
+        }
+
+        private static int ReadOperationChoiceFromUser()
+        {
+            while (true)
+            {
+                Console.WriteLine("\nChoose an operation:");
+                Console.WriteLine("1. Addition (+)");
+                Console.WriteLine("2. Subtraction (-)");
+                Console.WriteLine("3. Multiplication (*)");
+                Console.WriteLine("4. Division (/)");
+                Console.WriteLine("5. Modulus (%)");
+                Console.Write("Enter your choice (1-5): ");
+
+                // Menu input is also received as text. It must be converted to
+                // an integer before the program can compare it to menu options.
+                string? userInput = Console.ReadLine();
+
+                bool isValidChoice = int.TryParse(userInput, out int operationChoice);
+
+                if (isValidChoice && operationChoice >= 1 && operationChoice <= 5)
+                {
+                    return operationChoice;
+                }
+
+                Console.WriteLine("Invalid choice. Please enter a number from 1 to 5.");
                 Console.WriteLine();
             }
         }
