@@ -5,8 +5,8 @@
 // Defines the application entry point for the Personal Calculator console
 // application. This file is responsible for starting the program, displaying the
 // initial user-facing messages, collecting numeric input, presenting the
-// operation menu, and keeping the console session active until the user presses
-// Enter.
+// operation menu, calculating the selected operation, displaying the result, and
+// keeping the console session active until the user presses Enter.
 //
 // Responsibility Boundary:
 // Program.cs should remain a small startup file. It should coordinate application
@@ -14,14 +14,15 @@
 // menu logic should be moved into separate classes as the application grows.
 //
 // Current Stage:
-// This version collects two numeric values from the user, validates that each
-// value can be interpreted as a number, displays a menu of available arithmetic
-// operations, validates the selected menu option, and displays which operation
-// was selected.
+// This version collects two numeric values from the user, validates each value,
+// displays a menu of available arithmetic operations, validates the selected
+// menu option, performs the selected calculation, handles division and modulus
+// by zero, and displays the result as a formatted equation.
 //
 // Portfolio Quality Note:
-// Keeping the entry point readable while using reliable input validation makes
-// the project easier to maintain, test, review, and extend in later commits.
+// Keeping the entry point readable while using reliable validation and clear
+// calculation flow makes the project easier to maintain, test, review, and
+// extend in later commits.
 //
 // Author: Tanvir Ahmed
 // Created: 2026-05-25
@@ -51,29 +52,21 @@ namespace PersonalCalculator
 
             Console.WriteLine();
 
-            if (operationChoice == 1)
+            bool calculationSucceeded = TryCalculateResult(
+                firstNumber,
+                secondNumber,
+                operationChoice,
+                out double result,
+                out string operationSymbol,
+                out string errorMessage);
+
+            if (calculationSucceeded)
             {
-                Console.WriteLine("You chose Addition.");
-            }
-            else if (operationChoice == 2)
-            {
-                Console.WriteLine("You chose Subtraction.");
-            }
-            else if (operationChoice == 3)
-            {
-                Console.WriteLine("You chose Multiplication.");
-            }
-            else if (operationChoice == 4)
-            {
-                Console.WriteLine("You chose Division.");
-            }
-            else if (operationChoice == 5)
-            {
-                Console.WriteLine("You chose Modulus.");
+                Console.WriteLine($"{firstNumber} {operationSymbol} {secondNumber} = {result}");
             }
             else
             {
-                Console.WriteLine("Invalid operation choice.");
+                Console.WriteLine(errorMessage);
             }
 
             Console.WriteLine();
@@ -134,6 +127,72 @@ namespace PersonalCalculator
 
                 Console.WriteLine("Invalid choice. Please enter a number from 1 to 5.");
                 Console.WriteLine();
+            }
+        }
+
+        private static bool TryCalculateResult(
+            double firstNumber,
+            double secondNumber,
+            int operationChoice,
+            out double result,
+            out string operationSymbol,
+            out string errorMessage)
+        {
+            result = 0;
+            operationSymbol = string.Empty;
+            errorMessage = string.Empty;
+
+            if (operationChoice == 1)
+            {
+                result = firstNumber + secondNumber;
+                operationSymbol = "+";
+                return true;
+            }
+            else if (operationChoice == 2)
+            {
+                result = firstNumber - secondNumber;
+                operationSymbol = "-";
+                return true;
+            }
+            else if (operationChoice == 3)
+            {
+                result = firstNumber * secondNumber;
+                operationSymbol = "*";
+                return true;
+            }
+            else if (operationChoice == 4)
+            {
+                // Division by zero is not a valid calculator operation for this
+                // project, so the program reports the issue instead of showing
+                // Infinity or another confusing floating-point result.
+                if (secondNumber == 0)
+                {
+                    errorMessage = "Cannot divide by zero. Please run the program again with a non-zero second number.";
+                    return false;
+                }
+
+                result = firstNumber / secondNumber;
+                operationSymbol = "/";
+                return true;
+            }
+            else if (operationChoice == 5)
+            {
+                // Modulus also requires a non-zero divisor. A zero divisor would
+                // produce an invalid remainder result.
+                if (secondNumber == 0)
+                {
+                    errorMessage = "Cannot calculate modulus by zero. Please run the program again with a non-zero second number.";
+                    return false;
+                }
+
+                result = firstNumber % secondNumber;
+                operationSymbol = "%";
+                return true;
+            }
+            else
+            {
+                errorMessage = "Invalid choice. Please run the program again.";
+                return false;
             }
         }
     }

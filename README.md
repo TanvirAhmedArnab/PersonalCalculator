@@ -1,10 +1,10 @@
 # Personal Calculator
 
-Personal Calculator is a simple C# console application built as a portfolio project. The goal of this project is to demonstrate clean project setup, disciplined version control, readable code structure, reliable input handling, menu-driven interaction, and step-by-step feature development.
+Personal Calculator is a simple C# console application built as a portfolio project. The goal of this project is to demonstrate clean project setup, disciplined version control, readable code structure, reliable input handling, menu-driven interaction, basic error handling, and step-by-step feature development.
 
 ## Project Purpose
 
-This application will provide basic calculator functionality through a console interface. The project starts with a small, reliable foundation and then grows through controlled commits as new features are added.
+This application provides basic calculator functionality through a console interface. The project starts with a small, reliable foundation and then grows through controlled commits as new features are added.
 
 ## Current Features
 
@@ -18,19 +18,24 @@ This application will provide basic calculator functionality through a console i
 - Repeats number prompts when invalid numeric values are entered
 - Displays a menu with five arithmetic operation choices
 - Collects and validates the user's menu selection
-- Identifies the selected operation using `if`, `else if`, and `else`
+- Performs addition
+- Performs subtraction
+- Performs multiplication
+- Performs division
+- Performs modulus calculation
+- Prevents division by zero
+- Prevents modulus by zero
+- Displays the result as a formatted equation
 - Includes version control from the beginning of the project
 
 ## Planned Features
 
-- Perform addition
-- Perform subtraction
-- Perform multiplication
-- Perform division
-- Perform modulus calculation
-- Prevent division and modulus by zero
 - Repeated calculations
 - Cleaner separation of calculator logic from application startup code
+- Improved result formatting
+- Automated tests for calculator behavior
+- More structured error messages
+- Optional calculation history
 
 ## Technology Used
 
@@ -46,10 +51,12 @@ This project is being developed in small, professional stages. Each commit shoul
 
 The first stage established the project structure and confirmed that the application builds and runs successfully. The second stage added reliable input collection by asking the user for two numbers, validating the input, converting valid input into numeric values, and displaying the collected values back to the user.
 
-The current stage adds a user-friendly operation menu. The program now displays five arithmetic choices, validates the selected menu option, and confirms which operation the user selected.
+The third stage added a user-friendly operation menu. The program displayed five arithmetic choices, validated the selected menu option, and confirmed which operation the user selected.
 
-Future stages will add the actual arithmetic calculations, result display, repeated calculations, and cleaner separation between startup code, input handling, menu handling, and calculation logic.
+The current stage implements the actual arithmetic behavior. The program now performs the selected operation, displays a formatted equation, and handles invalid division or modulus by zero cases gracefully.
+
+Future stages will add repeated calculations, cleaner separation between startup code and calculator logic, improved output formatting, and automated tests.
 
 ## Repository Status
 
-This project is in active early development. The current version supports validated numeric input collection and validated operation menu selection.
+This project is in active early development. The current version supports validated numeric input, validated operation menu selection, arithmetic calculation, formatted result output, and basic zero-division protection.
