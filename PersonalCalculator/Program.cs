@@ -9,21 +9,21 @@
 // keeping the console session active until the user presses Enter.
 //
 // Responsibility Boundary:
-// Program.cs currently coordinates the full console workflow for this early
-// version of the project. As the application grows, calculator operations, input
+// Program.cs currently coordinates the full console workflow for this portfolio
+// version of the project. In a larger application, calculator operations, input
 // handling, validation, and menu behavior should be moved into separate classes
 // with clear responsibilities.
 //
 // Current Stage:
-// This version collects two numeric values from the user, validates each value,
-// displays a menu of available arithmetic operations, validates the selected
-// menu option, performs the selected calculation, handles division and modulus
-// by zero, and displays the result as a formatted equation.
+// This final version collects two numeric values from the user, validates each
+// value, displays a menu of available arithmetic operations, validates the
+// selected menu option, performs the selected calculation, handles division and
+// modulus by zero, and displays the result as a formatted equation.
 //
 // AI Assistance Documentation:
 // AI Tool Used:
 // ChatGPT was used to review the code for readability, validation quality,
-// naming clarity, and beginner-friendly maintainability.
+// naming clarity, comment quality, and beginner-friendly maintainability.
 //
 // Implemented AI Suggestion:
 // Named constants were added for operation menu choices instead of using raw
@@ -40,8 +40,8 @@
 // Portfolio Quality Note:
 // Keeping the entry point readable while using reliable validation and clear
 // calculation flow makes the project easier to maintain, test, review, and
-// extend in later commits.
-//
+// extend.
+// 
 // Author: Tanvir Ahmed
 // Created: 2026-05-25
 // Updated: 2026-05-25
@@ -116,8 +116,8 @@ namespace PersonalCalculator
             {
                 Console.WriteLine(prompt);
 
-                // Console input is received as text. The program must validate
-                // and convert that text before it can be used as a numeric value.
+                // Console input is received as text. The program validates and
+                // converts that text before using it as a numeric value.
                 string? userInput = Console.ReadLine();
 
                 bool isValidNumber = double.TryParse(

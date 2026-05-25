@@ -1,10 +1,14 @@
 # Personal Calculator
 
-Personal Calculator is a simple C# console application built as a portfolio project. The goal of this project is to demonstrate clean project setup, disciplined version control, readable code structure, reliable input handling, menu-driven interaction, basic error handling, and step-by-step feature development.
+Personal Calculator is a simple C# console application built as the capstone project for the Coursera course [C# Programming Fundamentals and Development Environment](https://www.coursera.org/learn/c-sharp-programming-fundamentals-and-development-environment/home/welcome). The goal of this project is to demonstrate clean project setup, disciplined version control, readable code structure, reliable input handling, menu-driven interaction, basic error handling, testing, and step-by-step feature development.
+
+## Course Context
+
+This project was completed as the capstone project for the Coursera course [C# Programming Fundamentals and Development Environment](https://www.coursera.org/learn/c-sharp-programming-fundamentals-and-development-environment/home/welcome).
 
 ## Project Purpose
 
-This application provides basic calculator functionality through a console interface. The project starts with a small, reliable foundation and then grows through controlled commits as new features are added.
+This application provides basic calculator functionality through a console interface. The project starts with a small, reliable foundation and grows through controlled commits as new features are added.
 
 ## Current Features
 
@@ -26,16 +30,8 @@ This application provides basic calculator functionality through a console inter
 - Prevents division by zero
 - Prevents modulus by zero
 - Displays the result as a formatted equation
-- Includes version control from the beginning of the project
-
-## Planned Features
-
-- Repeated calculations
-- Cleaner separation of calculator logic from application startup code
-- Improved result formatting
-- Automated tests for calculator behavior
-- More structured error messages
-- Optional calculation history
+- Includes documented AI assistance
+- Includes documented testing and debugging reflection
 
 ## Technology Used
 
@@ -45,17 +41,31 @@ This application provides basic calculator functionality through a console inter
 - Git
 - GitHub
 
-## Development Approach
+## Testing Summary
 
-This project is being developed in small, professional stages. Each commit should represent one clear improvement to the application.
+The calculator was tested with positive numbers, negative numbers, decimal numbers, invalid numeric input, invalid menu choices, division by zero, and modulus by zero.
 
-The first stage established the project structure and confirmed that the application builds and runs successfully. The second stage added reliable input collection by asking the user for two numbers, validating the input, converting valid input into numeric values, and displaying the collected values back to the user.
+### Manual Test Cases
 
-The third stage added a user-friendly operation menu. The program displayed five arithmetic choices, validated the selected menu option, and confirmed which operation the user selected.
+| Test Case | Example Input | Expected Result |
+|---|---:|---|
+| Addition | `10`, `5`, choice `1` | `10 + 5 = 15` |
+| Subtraction | `10`, `5`, choice `2` | `10 - 5 = 5` |
+| Multiplication | `10`, `5`, choice `3` | `10 * 5 = 50` |
+| Division | `10`, `5`, choice `4` | `10 / 5 = 2` |
+| Modulus | `10`, `3`, choice `5` | `10 % 3 = 1` |
+| Decimal addition | `5.5`, `3.2`, choice `1` | `5.5 + 3.2 = 8.7` |
+| Negative number calculation | `-10`, `3`, choice `1` | `-10 + 3 = -7` |
+| Division by zero | `10`, `0`, choice `4` | Clear divide-by-zero error message |
+| Modulus by zero | `10`, `0`, choice `5` | Clear modulus-by-zero error message |
+| Invalid number input | `abc` | Program asks for a valid numeric value again |
+| Invalid menu choice | `9` or `abc` | Program asks for a number from `1` to `5` again |
 
-The current stage implements the actual arithmetic behavior. The program now performs the selected operation, displays a formatted equation, and handles invalid division or modulus by zero cases gracefully.
+## Debugging Summary
 
-Future stages will add repeated calculations, cleaner separation between startup code and calculator logic, improved output formatting, and automated tests.
+During debugging, a breakpoint was set before the call to `TryCalculateResult`. I stepped into the method and watched `firstNumber`, `secondNumber`, `operationChoice`, `result`, `operationSymbol`, and `errorMessage` in the Visual Studio Locals window.
+
+One issue I checked carefully was division by zero. By stepping through the division branch with `secondNumber` set to `0`, I confirmed that the program returned a clear error message instead of calculating an invalid result.
 
 ## AI Assistance Disclosure
 
@@ -65,6 +75,16 @@ One implemented suggestion was replacing repeated raw menu numbers with named co
 
 All AI-generated suggestions were reviewed before being added. Only suggestions that were understandable, useful, and appropriate for the current project stage were implemented.
 
+## Development Reflection
+
+The most challenging part of this project was not the arithmetic itself, but making the program handle user input safely. A simple calculator can fail quickly if the user enters text instead of a number, chooses an invalid menu option, or attempts division by zero. Adding validation made the project more reliable and closer to how a real user-facing tool should behave.
+
+AI assistance helped by suggesting readability improvements, especially named constants and clearer structure around input validation. It was useful as a review tool, but the suggestions still needed to be evaluated before implementation. In the future, this calculator could be improved by adding repeated calculations, calculation history, cleaner separation into multiple classes, and automated unit tests.
+
+## Development Approach
+
+This project was developed in small, meaningful commits. Each commit introduced one clear improvement, such as project setup, validated input collection, menu selection, arithmetic calculation, code cleanup, AI assistance documentation, and final testing.
+
 ## Repository Status
 
-This project is in active early development. The current version supports validated numeric input, validated operation menu selection, arithmetic calculation, formatted result output, and basic zero-division protection.
+This project is complete as the capstone project for the Coursera course [C# Programming Fundamentals and Development Environment](https://www.coursera.org/learn/c-sharp-programming-fundamentals-and-development-environment/home/welcome). The current version supports validated numeric input, validated operation menu selection, arithmetic calculation, formatted result output, basic zero-division protection, documented AI assistance, and documented testing.
