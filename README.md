@@ -57,6 +57,14 @@ The current stage implements the actual arithmetic behavior. The program now per
 
 Future stages will add repeated calculations, cleaner separation between startup code and calculator logic, improved output formatting, and automated tests.
 
+## AI Assistance Disclosure
+
+AI assistance was used during development to review code readability, validation logic, naming clarity, and comment quality.
+
+One implemented suggestion was replacing repeated raw menu numbers with named constants such as `AdditionChoice`, `DivisionChoice`, and `ModulusChoice`. This made the operation-selection logic easier to read and reduced the chance of mismatching menu numbers in future changes.
+
+All AI-generated suggestions were reviewed before being added. Only suggestions that were understandable, useful, and appropriate for the current project stage were implemented.
+
 ## Repository Status
 
 This project is in active early development. The current version supports validated numeric input, validated operation menu selection, arithmetic calculation, formatted result output, and basic zero-division protection.

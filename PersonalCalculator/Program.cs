@@ -9,15 +9,33 @@
 // keeping the console session active until the user presses Enter.
 //
 // Responsibility Boundary:
-// Program.cs should remain a small startup file. It should coordinate application
-// launch behavior only. Calculator operations, input handling, validation, and
-// menu logic should be moved into separate classes as the application grows.
+// Program.cs currently coordinates the full console workflow for this early
+// version of the project. As the application grows, calculator operations, input
+// handling, validation, and menu behavior should be moved into separate classes
+// with clear responsibilities.
 //
 // Current Stage:
 // This version collects two numeric values from the user, validates each value,
 // displays a menu of available arithmetic operations, validates the selected
 // menu option, performs the selected calculation, handles division and modulus
 // by zero, and displays the result as a formatted equation.
+//
+// AI Assistance Documentation:
+// AI Tool Used:
+// ChatGPT was used to review the code for readability, validation quality,
+// naming clarity, and beginner-friendly maintainability.
+//
+// Implemented AI Suggestion:
+// Named constants were added for operation menu choices instead of using raw
+// numeric values throughout the program. For example, AdditionChoice is used
+// instead of repeatedly comparing directly against the number 1.
+//
+// Evaluation:
+// This suggestion was implemented because it makes the if/else calculation logic
+// easier to read, reduces the risk of accidental number mismatches, and keeps the
+// menu options easier to update in future commits. The suggestion was reviewed
+// before implementation and only kept because its behavior is simple,
+// understandable, and appropriate for the current project stage.
 //
 // Portfolio Quality Note:
 // Keeping the entry point readable while using reliable validation and clear
@@ -36,11 +54,15 @@ namespace PersonalCalculator
 {
     internal class Program
     {
+        private const int AdditionChoice = 1;
+        private const int SubtractionChoice = 2;
+        private const int MultiplicationChoice = 3;
+        private const int DivisionChoice = 4;
+        private const int ModulusChoice = 5;
+
         private static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Your Personal Calculator!");
-            Console.WriteLine("===================================");
-            Console.WriteLine();
+            WriteWelcomeMessage();
 
             double firstNumber = ReadNumberFromUser("Please enter your first number:");
             double secondNumber = ReadNumberFromUser("Please enter your second number:");
@@ -69,11 +91,23 @@ namespace PersonalCalculator
                 Console.WriteLine(errorMessage);
             }
 
+            WriteClosingMessage();
+
+            Console.ReadLine();
+        }
+
+        private static void WriteWelcomeMessage()
+        {
+            Console.WriteLine("Welcome to Your Personal Calculator!");
+            Console.WriteLine("===================================");
+            Console.WriteLine();
+        }
+
+        private static void WriteClosingMessage()
+        {
             Console.WriteLine();
             Console.WriteLine("Thank you for using the calculator!");
             Console.WriteLine("Press Enter to close the application.");
-
-            Console.ReadLine();
         }
 
         private static double ReadNumberFromUser(string prompt)
@@ -106,21 +140,13 @@ namespace PersonalCalculator
         {
             while (true)
             {
-                Console.WriteLine("\nChoose an operation:");
-                Console.WriteLine("1. Addition (+)");
-                Console.WriteLine("2. Subtraction (-)");
-                Console.WriteLine("3. Multiplication (*)");
-                Console.WriteLine("4. Division (/)");
-                Console.WriteLine("5. Modulus (%)");
-                Console.Write("Enter your choice (1-5): ");
+                WriteOperationMenu();
 
-                // Menu input is also received as text. It must be converted to
-                // an integer before the program can compare it to menu options.
                 string? userInput = Console.ReadLine();
 
                 bool isValidChoice = int.TryParse(userInput, out int operationChoice);
 
-                if (isValidChoice && operationChoice >= 1 && operationChoice <= 5)
+                if (isValidChoice && operationChoice >= AdditionChoice && operationChoice <= ModulusChoice)
                 {
                     return operationChoice;
                 }
@@ -128,6 +154,17 @@ namespace PersonalCalculator
                 Console.WriteLine("Invalid choice. Please enter a number from 1 to 5.");
                 Console.WriteLine();
             }
+        }
+
+        private static void WriteOperationMenu()
+        {
+            Console.WriteLine("\nChoose an operation:");
+            Console.WriteLine($"{AdditionChoice}. Addition (+)");
+            Console.WriteLine($"{SubtractionChoice}. Subtraction (-)");
+            Console.WriteLine($"{MultiplicationChoice}. Multiplication (*)");
+            Console.WriteLine($"{DivisionChoice}. Division (/)");
+            Console.WriteLine($"{ModulusChoice}. Modulus (%)");
+            Console.Write("Enter your choice (1-5): ");
         }
 
         private static bool TryCalculateResult(
@@ -142,29 +179,28 @@ namespace PersonalCalculator
             operationSymbol = string.Empty;
             errorMessage = string.Empty;
 
-            if (operationChoice == 1)
+            if (operationChoice == AdditionChoice)
             {
                 result = firstNumber + secondNumber;
                 operationSymbol = "+";
                 return true;
             }
-            else if (operationChoice == 2)
+            else if (operationChoice == SubtractionChoice)
             {
                 result = firstNumber - secondNumber;
                 operationSymbol = "-";
                 return true;
             }
-            else if (operationChoice == 3)
+            else if (operationChoice == MultiplicationChoice)
             {
                 result = firstNumber * secondNumber;
                 operationSymbol = "*";
                 return true;
             }
-            else if (operationChoice == 4)
+            else if (operationChoice == DivisionChoice)
             {
-                // Division by zero is not a valid calculator operation for this
-                // project, so the program reports the issue instead of showing
-                // Infinity or another confusing floating-point result.
+                // Division by zero is blocked so the calculator displays a clear
+                // user-facing message instead of showing an invalid result.
                 if (secondNumber == 0)
                 {
                     errorMessage = "Cannot divide by zero. Please run the program again with a non-zero second number.";
@@ -175,10 +211,10 @@ namespace PersonalCalculator
                 operationSymbol = "/";
                 return true;
             }
-            else if (operationChoice == 5)
+            else if (operationChoice == ModulusChoice)
             {
-                // Modulus also requires a non-zero divisor. A zero divisor would
-                // produce an invalid remainder result.
+                // Modulus uses the second number as the divisor, so zero must be
+                // blocked for the same reason as division.
                 if (secondNumber == 0)
                 {
                     errorMessage = "Cannot calculate modulus by zero. Please run the program again with a non-zero second number.";
