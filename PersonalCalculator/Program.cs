@@ -4,8 +4,8 @@
 // Purpose:
 // Defines the application entry point for the Personal Calculator console
 // application. This file is responsible for starting the program, displaying the
-// initial user-facing messages, and keeping the console session active until the
-// user presses Enter.
+// initial user-facing messages, collecting the first numeric values from the
+// user, and keeping the console session active until the user presses Enter.
 //
 // Responsibility Boundary:
 // Program.cs should remain a small startup file. It should coordinate application
@@ -13,20 +13,21 @@
 // menu logic should be moved into separate classes as the application grows.
 //
 // Current Stage:
-// This version establishes the initial project structure, confirms that the
-// application builds and runs successfully, and presents the first user-facing
-// console screen.
+// This version collects two numeric values from the user, validates that each
+// value can be interpreted as a number, stores the values as double variables,
+// and displays the collected values back to the user.
 //
 // Portfolio Quality Note:
-// Keeping the entry point small improves readability, maintainability, testing,
-// and future extension.
+// Keeping the entry point readable while using reliable input validation makes
+// the project easier to maintain, test, review, and extend in later commits.
 //
 // Author: Tanvir Ahmed
 // Created: 2026-05-25
-// Last Updated: 2026-05-25
+// Updated: 2026-05-25
 // -----------------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 
 namespace PersonalCalculator
 {
@@ -38,13 +39,43 @@ namespace PersonalCalculator
             Console.WriteLine("===================================");
             Console.WriteLine();
 
-            Console.WriteLine("This calculator is being prepared for basic arithmetic operations.");
+            double firstNumber = ReadNumberFromUser("Please enter your first number:");
+            double secondNumber = ReadNumberFromUser("Please enter your second number:");
+
+            Console.WriteLine();
+            Console.WriteLine($"You entered: {firstNumber} and {secondNumber}");
             Console.WriteLine();
 
             Console.WriteLine("Thank you for using the calculator!");
             Console.WriteLine("Press Enter to close the application.");
 
             Console.ReadLine();
+        }
+
+        private static double ReadNumberFromUser(string prompt)
+        {
+            while (true)
+            {
+                Console.WriteLine(prompt);
+
+                // Console input is received as text. The program must validate
+                // and convert that text before it can be used as a numeric value.
+                string? userInput = Console.ReadLine();
+
+                bool isValidNumber = double.TryParse(
+                    userInput,
+                    NumberStyles.Float,
+                    CultureInfo.CurrentCulture,
+                    out double parsedNumber);
+
+                if (isValidNumber)
+                {
+                    return parsedNumber;
+                }
+
+                Console.WriteLine("Invalid number. Please enter a valid numeric value.");
+                Console.WriteLine();
+            }
         }
     }
 }
